@@ -1,9 +1,7 @@
-فود سنتر اپللیکیشن سفارش غذا
-
-صفحه اولیه
-![Screenshot_2023-01-03-13-18-47-877_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210335608-cee9134f-9e8c-4124-87ce-7db09829a377.jpg)
-
-IntroductionPage:
+# فودسنتر اپلیکیشن سفارش غذا
 
 
-![Uploading Screenshot_2023-01-03-13-45-41-327_com.example.food_mobile_app_ui.jpg…]()
+
+## صفحه اولیه
+
+![Screenshot_2023-01-03-13-18-47-877_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210338955-a0df85f5-3b8e-4a7a-9786-014a4c2fbd7c.jpg)
