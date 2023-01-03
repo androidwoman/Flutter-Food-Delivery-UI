@@ -433,7 +433,6 @@ class TabBar extends StatelessWidget {
 class TopTextWidget extends StatelessWidget {
   static final topTexts = [
     "سالاد های خوشمزه ",
-    "سوپ های لذیذ",
     "خوراک های مختلف",
     "انواع ماهی ها"
   ];

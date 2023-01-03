@@ -315,11 +315,13 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                         onPressed: () {
                           Get.defaultDialog(
                               barrierDismissible: false,
-                              title: "Warning!",
+                              title: "اخطار",
                               content: const Text(
-                                "Do you really wanna remove all items from this list?",
+                                "آیا میخواهید همه محصولات خود را حذف کنید؟",
                                 textAlign: TextAlign.center,
                               ),
+                              textCancel: "لغو",
+                              textConfirm: "باشه",
                               confirmTextColor: Colors.white,
                               onCancel: () {},
                               onConfirm: () {
