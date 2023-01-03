@@ -50,6 +50,8 @@
 
 
 ## سبد خرید در حالت پر
+![Screenshot_2023-01-03-13-19-42-444_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210340854-a9de2ce8-e91f-475b-b9e3-54e76ca3f419.jpg)
+
 
 
 
