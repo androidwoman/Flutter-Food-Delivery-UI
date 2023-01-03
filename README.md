@@ -1,5 +1,4 @@
-
-![Screenshot_2023-01-03-13-18-47-877_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210334342-0c6edff9-cd76-459f-b454-92893324f9aa.jpg)
+<img src="https://user-images.githubusercontent.com/76970164/210334342-0c6edff9-cd76-459f-b454-92893324f9aa.jpg)" width="48">
 ![Screenshot_2023-01-03-13-18-51-858_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210334354-8d22a5fb-8635-4e15-8d9d-c4e8cdc3e5fb.jpg)
 ![Screenshot_2023-01-03-13-18-54-569_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210334361-71397402-0bd2-4bb6-bb14-16413af6dc6b.jpg)
 ![Screenshot_2023-01-03-13-18-57-408_com example food_mobile_app_ui](https://user-images.githubusercontent.com/76970164/210334369-250aea5a-cdc7-450f-af37-5eafb5ba608c.jpg)
