@@ -8,8 +8,8 @@ import '../controllers/drawer_controller.dart';
 import '../controllers/navigator_controllers.dart';
 import '../model/drawer_model.dart';
 
-final w = Get.width;
-final h = Get.height;
+final w = 390.0;
+final h = 844.0;
 
 const Color unSelectedColor = Color.fromARGB(255, 234, 234, 234);
 

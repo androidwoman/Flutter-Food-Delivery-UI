@@ -30,7 +30,7 @@ class IntroductionPage extends StatelessWidget {
             Get.offAll(()=> const MainNavigator(),
                 transition: Transition.cupertino);
           },
-          itemBuilder: (int index, double value) {
+          itemBuilder: (int index) {
             return Column(
               children: [
                 Align(

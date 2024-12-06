@@ -485,7 +485,7 @@ class TopTextWidget extends StatelessWidget {
 }
 
 /// MyAppBar Widget Components
-class MyAppBar extends StatelessWidget with PreferredSizeWidget {
+class MyAppBar extends StatelessWidget implements  PreferredSizeWidget {
   const MyAppBar({
     Key? key,
   }) : super(key: key);

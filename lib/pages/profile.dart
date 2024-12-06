@@ -268,7 +268,7 @@ class TopUserInfo extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "برنامه نویس سطح میانی فلاتر و اندروید",
+                    "کاربر ساده",
                     style: GoogleFonts.oxygen(
                       color: Colors.grey,
                       fontWeight: FontWeight.w200,
@@ -286,7 +286,7 @@ class TopUserInfo extends StatelessWidget {
 }
 
 /// User profile Section AppBar
-class UserProfileAppBar extends StatelessWidget with PreferredSizeWidget {
+class UserProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const UserProfileAppBar({
     Key? key,
   }) : super(key: key);

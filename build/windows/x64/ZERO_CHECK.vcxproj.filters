@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="E:\food_ui\build\windows\x64\CMakeFiles\d89ade90496254acdb38f3779ec5f02c\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{781BA4AB-A9CC-3299-B289-C981C0598AA0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
