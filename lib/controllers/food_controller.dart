@@ -8,7 +8,7 @@ class FoodController extends GetxController {
       id: "1",
       img: "assets/images/1.png",
       title: "سالاد یونانی",
-      subtitle: "به همره سس مخصوص",
+      subtitle: "به همراه سس مخصوص",
       price: 32.00,
       deliveryTime: "۱۵ دقیقه",
       description:
@@ -19,7 +19,7 @@ class FoodController extends GetxController {
       id: "2",
       img: "assets/images/2.png",
       title: "سالاد سزار",
-      subtitle: "به همره سس مخصوص",
+      subtitle: "به همراه سس مخصوص",
       price: 24.00,
       deliveryTime: "۲۰ دقیقه",
       description:

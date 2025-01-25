@@ -47,14 +47,13 @@ class BottomPrice extends StatelessWidget {
     return FadeInDown(
       delay: const Duration(milliseconds: 1300),
       child: Align(
-        alignment: Alignment.bottomLeft,
+        alignment: Alignment.bottomRight,
         child: Container(
           margin: const EdgeInsets.only(
-            top: 20,
+            top: 10,
           ),
-
-          child: Column(
-            crossAxisAlignment:CrossAxisAlignment.end ,
+          child: Row(
+            crossAxisAlignment:CrossAxisAlignment.start ,
             children: [
               Text(
                 "هزینه نهایی",
@@ -64,7 +63,7 @@ class BottomPrice extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 10,
+                width: 10,
               ),
               Text(
                 "${Get.find<FoodController>().foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].price.toStringAsFixed(2)} تومان ",
@@ -146,9 +145,9 @@ class MiddleDescription extends StatelessWidget {
     return FadeInDown(
       delay: const Duration(milliseconds: 900),
       child: Container(
-        margin: const EdgeInsets.only(top: 30),
+        margin: const EdgeInsets.only(top: 8),
         width: w,
-        height: h / 9,
+        height: h / 5,
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Text(
@@ -176,6 +175,7 @@ class MyFAB extends StatelessWidget {
       height: 70,
       width: 70,
       child: FloatingActionButton(
+
         backgroundColor: Colors.black,
         onPressed: () {
           Get.find<WalletController>().add(

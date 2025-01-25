@@ -134,7 +134,7 @@ class BottomSaladGridView extends StatelessWidget {
                                       color: const Color.fromARGB(
                                           255, 135, 134, 134),
                                       fontWeight: FontWeight.w300,
-                                      fontSize: 16),
+                                      fontSize: 14),
                                 ),
                               ),
                               FadeInDown(
@@ -301,7 +301,7 @@ class MiddleSaladsPageView extends StatelessWidget {
                                   color:
                                       const Color.fromARGB(255, 135, 134, 134),
                                   fontWeight: FontWeight.w300,
-                                  fontSize: 16),
+                                  fontSize: 14),
                             ),
                           ),
                           FadeInDown(

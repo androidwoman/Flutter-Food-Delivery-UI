@@ -1,13 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:concentric_transition/concentric_transition.dart';
+import 'package:food_mobile_app_ui/pages/login.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 //
 import '../pages/landscape_mode.dart';
 import '../model/introduction_model.dart';
-import '../navigator.dart';
+
 
 class IntroductionPage extends StatelessWidget {
   const IntroductionPage({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class IntroductionPage extends StatelessWidget {
 
           itemCount: concentrics.length,
           onFinish: () {
-            Get.offAll(()=> const MainNavigator(),
+            Get.offAll(()=> const LoginPage(),
                 transition: Transition.cupertino);
           },
           itemBuilder: (int index) {
@@ -39,7 +40,7 @@ class IntroductionPage extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 50, left: 20),
                     child: GestureDetector(
                       onTap: () {
-                        Get.offAll(()=>const MainNavigator(),
+                        Get.offAll(()=>const LoginPage(),
                             transition: Transition.cupertino);
                       },
                       child: const Text(

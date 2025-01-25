@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:food_mobile_app_ui/pages/login.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //
@@ -8,8 +9,8 @@ import '../controllers/drawer_controller.dart';
 import '../controllers/navigator_controllers.dart';
 import '../model/drawer_model.dart';
 
-final w = 390.0;
-final h = 844.0;
+const w = 390.0;
+const h = 844.0;
 
 const Color unSelectedColor = Color.fromARGB(255, 234, 234, 234);
 
@@ -17,6 +18,9 @@ Drawer mainDrawer(int index) {
   var controller = Get.find<MainDrawerController>();
   final navController = Get.find<NavigatorController>();
   controller.changeIndex(index);
+  final box = GetStorage();
+  Map<String, dynamic>? storedUser = box.read('user');
+
   return Drawer(
     child: Column(
       children: [
@@ -28,7 +32,7 @@ Drawer mainDrawer(int index) {
                   image: AssetImage('assets/images/drawer.jpg'),
                   fit: BoxFit.cover)),
           child: Padding(
-            padding: const EdgeInsets.only(top: 10, left: 40),
+            padding: const EdgeInsets.only(top: 10, right: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +44,7 @@ Drawer mainDrawer(int index) {
                 const SizedBox(
                   height: 10,
                 ),
-                Text("Fatemeh Chitsaz",
+                Text(storedUser?['name'],
                     style: GoogleFonts.oxygen(
                       color: Colors.white,
                       fontSize: 20,
@@ -67,6 +71,7 @@ Drawer mainDrawer(int index) {
                       return GestureDetector(
                         onTap: () {
                           controller.changeIndex(index);
+                          print(index);
                           switch (index) {
                             case 0:
                               navController.changeNavBarIndex(2);
@@ -80,59 +85,55 @@ Drawer mainDrawer(int index) {
                               navController.changeNavBarIndex(0);
                               break;
 
-                            case 6:
+                            case 4:
                               Navigator.pop(context);
-                              Future.delayed(const Duration(milliseconds: 300),
-                                  () {
-                                return showDialog<void>(
-                                  context: context,
-                                  barrierDismissible:
-                                      false, // user must tap button!
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text(
-                                        "Hey You!",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w300),
+                              showDialog<void>(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                      "خروج از برنامه",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.orange),
+                                    ),
+                                    content: const SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Text(
+                                            "آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                color: Colors.black87),
+                                          ),
+                                        ],
                                       ),
-                                      content: SingleChildScrollView(
-                                        child: ListBody(
-                                          children: const <Widget>[
-                                            Text(
-                                                'Do you really want to exit from our app? ',
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.w400,
-                                                    color: Color.fromARGB(
-                                                        255, 134, 134, 134))),
-                                          ],
-                                        ),
+                                    ),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        child: const Text("خیر",
+                                            style: TextStyle(
+                                                color: Colors.orange)),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
                                       ),
-                                      actions: <Widget>[
-                                        TextButton(
-                                            child: const Text(
-                                              'Nup',
-                                              style: TextStyle(
-                                                  color: Color.fromARGB(
-                                                      255, 109, 109, 109)),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            }),
-                                        TextButton(
-                                            child: const Text(
-                                              'Yup',
-                                              style: TextStyle(
-                                                  color:
-                                                      Colors.deepPurpleAccent),
-                                            ),
-                                            onPressed: () {
-                                              SystemNavigator.pop();
-                                            }),
-                                      ],
-                                    );
-                                  },
-                                );
-                              });
+                                      TextButton(
+                                        child: const Text("بله",
+                                            style:
+                                                TextStyle(color: Colors.red)),
+                                        onPressed: () {
+                                          final box = GetStorage();
+                                          box.remove('user');
+                                          Get.offAll(() => const LoginPage(),
+                                              transition: Transition.cupertino);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
 
                               break;
 
