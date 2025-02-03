@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:food_mobile_app_ui/controllers/tabbar_controller.dart';
 import 'package:get/get.dart';
@@ -13,9 +14,14 @@ import '../pages/details.dart';
 
 import '../utils/constanst.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +33,46 @@ class HomePage extends StatelessWidget {
           children: [
             const TopTextWidget(),
             TabBar(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('پر فروش ترین های امروز',
+                      style: GoogleFonts.oxygen(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                      )),
+                  Directionality(
+                    textDirection: TextDirection.ltr,
+                    child: TextButton.icon(
+                      onPressed: () {
+                        // Add your navigation or action here
+                      },
+                      icon: const Icon(Icons.arrow_back_ios,
+                          color: Colors.orange),
+                      label: Text(
+                        'مشاهده همه',
+                        style: GoogleFonts.oxygen(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             const MiddleSaladsPageView(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('پیشنهاد کابران',
+                  style: GoogleFonts.oxygen(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  )),
+            ),
             const BottomSaladGridView(),
           ],
         ),
@@ -78,7 +123,14 @@ class BottomSaladGridView extends StatelessWidget {
                           height: h / 4,
                           decoration: BoxDecoration(
                               color: unSelectedColor,
-                              borderRadius: BorderRadius.circular(60)),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(30)),
                         ),
                       ),
                     ),
@@ -87,16 +139,29 @@ class BottomSaladGridView extends StatelessWidget {
                         alignment: Alignment.topCenter,
                         child: FadeInDown(
                           delay: const Duration(milliseconds: 1600),
-                          child: Spin(
-                            delay: const Duration(milliseconds: 1650),
-                            child: Image.asset(
-                              _foodController
-                                  .foods[_tabController.currentIndex.value]
-                                      [index]
-                                  .img,
-                              width: w / 3.5,
-                              height: h / 7,
-                              fit: BoxFit.cover,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                // Adding shadow to the image
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 10,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Spin(
+                              delay: const Duration(milliseconds: 1650),
+                              child: Image.asset(
+                                _foodController
+                                    .foods[_tabController.currentIndex.value]
+                                        [index]
+                                    .img,
+                                width: w / 3.5,
+                                height: h / 7,
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
                           ),
                         ),
@@ -131,8 +196,7 @@ class BottomSaladGridView extends StatelessWidget {
                                           [index]
                                       .subtitle,
                                   style: GoogleFonts.oxygen(
-                                      color: const Color.fromARGB(
-                                          255, 135, 134, 134),
+                                      color: Colors.grey.shade700,
                                       fontWeight: FontWeight.w300,
                                       fontSize: 14),
                                 ),
@@ -153,7 +217,7 @@ class BottomSaladGridView extends StatelessWidget {
                       );
                     }),
                     Positioned(
-                      right: 5,
+                      left: 5,
                       bottom: 5,
                       child: FadeInUp(
                         delay: const Duration(milliseconds: 1950),
@@ -201,20 +265,28 @@ class BottomSaladGridView extends StatelessWidget {
 }
 
 /// Middle Salads PageView Widget Components
-class MiddleSaladsPageView extends StatelessWidget {
+class MiddleSaladsPageView extends StatefulWidget {
   const MiddleSaladsPageView({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<MiddleSaladsPageView> createState() => _MiddleSaladsPageViewState();
+}
+
+class _MiddleSaladsPageViewState extends State<MiddleSaladsPageView> {
   @override
   Widget build(BuildContext context) {
     var _controller = Get.find<SwitchController>();
     var _tabController = Get.find<TabBarController>();
     var _foodController = Get.find<FoodController>();
     return SizedBox(
-        width: w,
         height: h / 4.5,
         child: PageView.builder(
+            controller: PageController(
+              viewportFraction: 0.8,
+            ),
+            padEnds: false,
             itemCount:
                 _foodController.foods[_controller.currentCategoryIndex].length,
             physics: const BouncingScrollPhysics(),
@@ -224,36 +296,55 @@ class MiddleSaladsPageView extends StatelessWidget {
                   _controller.currentFoodIndex = index;
                   _controller.currentCategoryIndex =
                       _tabController.currentIndex.value;
+
                   Get.to(() => const DetailsPage());
                 },
-                child: Container(
-                  margin: const EdgeInsets.all(5),
-                  width: w / 1.1,
+                child: SizedBox(
+                  width: w / 1.3,
+                  height: h / 5.5,
                   child: Stack(children: [
-                    Positioned(
-                      bottom: 10,
-                      right: 0,
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: FadeInLeft(
                         delay: const Duration(milliseconds: 900),
                         child: Container(
-                          width: w / 1.1,
+                          width: w / 1.5,
                           height: h / 5.5,
                           decoration: BoxDecoration(
                               color: unSelectedColor,
-                              borderRadius: BorderRadius.circular(100)),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(30)),
                         ),
                       ),
                     ),
                     Obx(() {
                       return Positioned(
-                        bottom: 3,
+                        bottom: 15,
+                        right: 10,
                         child: FadeInLeft(
                           delay: const Duration(milliseconds: 1000),
                           child: Spin(
                             delay: const Duration(milliseconds: 1100),
-                            child: SizedBox(
-                              width: w / 2.5,
-                              height: h / 5,
+                            child: Container(
+                              width: w / 3.5,
+                              height: h / 5.2,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  // Adding shadow to the image
+                                  BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 10,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
                               child: Hero(
                                 tag: _foodController
                                     .foods[_tabController.currentIndex.value]
@@ -264,7 +355,7 @@ class MiddleSaladsPageView extends StatelessWidget {
                                       .foods[_tabController.currentIndex.value]
                                           [index]
                                       .img,
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.fitWidth,
                                 ),
                               ),
                             ),
@@ -272,94 +363,115 @@ class MiddleSaladsPageView extends StatelessWidget {
                         ),
                       );
                     }),
+                    Obx(() {
+                      return Positioned(
+                        left: 40,
+                        top: 40,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FadeInDown(
+                              delay: const Duration(milliseconds: 1200),
+                              child: Text(
+                                _foodController
+                                    .foods[_tabController.currentIndex.value]
+                                        [index]
+                                    .title,
+                                style: GoogleFonts.oxygen(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ),
+                            FadeInDown(
+                              delay: const Duration(milliseconds: 1300),
+                              child: Text(
+                                _foodController
+                                    .foods[_tabController.currentIndex.value]
+                                        [index]
+                                    .subtitle,
+                                textDirection: TextDirection.rtl,
+                                style: GoogleFonts.oxygen(
+                                    color: Colors.grey.shade700,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize: 14),
+                              ),
+                            ),
+                            FadeInDown(
+                              delay: const Duration(milliseconds: 1400),
+                              child: Text(
+                                "${_foodController.foods[_tabController.currentIndex.value][index].price.toStringAsFixed(2)} تومان",
+                                style: GoogleFonts.oxygen(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                     Positioned(
-                      left: 80,
-                      top: 30,
-                      child: Column(
-                        children: [
-                          FadeInDown(
-                            delay: const Duration(milliseconds: 1200),
-                            child: Text(
-                              _foodController
-                                  .foods[_tabController.currentIndex.value]
-                                      [index]
-                                  .title,
-                              style: GoogleFonts.oxygen(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 22),
-                            ),
-                          ),
-                          FadeInDown(
-                            delay: const Duration(milliseconds: 1300),
-                            child: Text(
-                              _foodController
-                                  .foods[_tabController.currentIndex.value]
-                                      [index]
-                                  .subtitle,
-                              style: GoogleFonts.oxygen(
-                                  color:
-                                      const Color.fromARGB(255, 135, 134, 134),
-                                  fontWeight: FontWeight.w300,
-                                  fontSize: 14),
-                            ),
-                          ),
-                          FadeInDown(
-                            delay: const Duration(milliseconds: 1400),
-                            child: Text(
-                              "${_foodController.foods[_tabController.currentIndex.value][index].price.toStringAsFixed(2)} تومان",
-                              style: GoogleFonts.oxygen(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 23),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      right: 5,
+                      left: 5,
                       bottom: 10,
                       child: FadeInUp(
-                        delay: const Duration(milliseconds: 1450),
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          child: IconButton(
-                              onPressed: () {
-                                Get.find<WalletController>().add(
-                                  id: _foodController
-                                      .foods[_tabController.currentIndex.value]
-                                          [index]
-                                      .id,
-                                  img: _foodController
-                                      .foods[_tabController.currentIndex.value]
-                                          [index]
-                                      .img,
-                                  title: _foodController
-                                      .foods[_tabController.currentIndex.value]
-                                          [index]
-                                      .title,
-                                  subtitle: _foodController
-                                      .foods[_tabController.currentIndex.value]
-                                          [index]
-                                      .subtitle,
-                                  price: _foodController
-                                      .foods[_tabController.currentIndex.value]
-                                          [index]
-                                      .price,
-                                );
-                              },
-                              icon: const Icon(
-                                Icons.add,
-                                color: unSelectedColor,
-                              )),
-                        ),
-                      ),
-                    )
+                          delay: const Duration(milliseconds: 1450),
+                          child: DescribedFeatureOverlay(
+                            featureId: 'add_item_feature_id',
+                            // Unique id that identifies this overlay.
+                            tapTarget: const CircleAvatar(
+                                backgroundColor: Colors.black,
+                                child: Icon(
+                                  Icons.add,
+                                  color: unSelectedColor,
+                                )),
+
+                            // The widget that will be displayed as the tap target.
+                            title: const Text('افزودن غذا'),
+                            description: const Text(
+                                'با زدن این آیتم میتوانید غذای انتخابی را به لیست خرید خود اضافه کنید همچنین برای نمایش جزئیات بیشتر میتوانید روی کارت مربوط به غذای مورد نظر کلیک کنید'),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            contentLocation: ContentLocation.above,
+                            overflowMode: OverflowMode.wrapBackground,
+                            onComplete: () async {
+                              return true;
+                            },
+                            targetColor: Colors.orange.shade100,
+                            textColor: Colors.white,
+                            child: buildCircleAvatar(
+                                _foodController, _tabController, index),
+                          )),
+                    ),
                   ]),
                 ),
               );
             }));
+  }
+
+  CircleAvatar buildCircleAvatar(FoodController _foodController,
+      TabBarController _tabController, int index) {
+    return CircleAvatar(
+      backgroundColor: Colors.black,
+      child: IconButton(
+          onPressed: () {
+            Get.find<WalletController>().add(
+              id: _foodController
+                  .foods[_tabController.currentIndex.value][index].id,
+              img: _foodController
+                  .foods[_tabController.currentIndex.value][index].img,
+              title: _foodController
+                  .foods[_tabController.currentIndex.value][index].title,
+              subtitle: _foodController
+                  .foods[_tabController.currentIndex.value][index].subtitle,
+              price: _foodController
+                  .foods[_tabController.currentIndex.value][index].price,
+            );
+          },
+          icon: const Icon(
+            Icons.add,
+            color: unSelectedColor,
+          )),
+    );
   }
 }
 
@@ -472,7 +584,7 @@ class TopTextWidget extends StatelessWidget {
                 subTexts[_controller.currentIndex.value],
                 style: GoogleFonts.oxygen(
                   fontSize: 18,
-                  color: Colors.grey,
+                  color: Colors.grey.shade700,
                   fontWeight: FontWeight.w300,
                 ),
               );
@@ -485,7 +597,7 @@ class TopTextWidget extends StatelessWidget {
 }
 
 /// MyAppBar Widget Components
-class MyAppBar extends StatelessWidget implements  PreferredSizeWidget {
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     Key? key,
   }) : super(key: key);
@@ -512,18 +624,40 @@ class MyAppBar extends StatelessWidget implements  PreferredSizeWidget {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 10, 2),
-            child: GestureDetector(
-              onTap: () {
-                Get.find<NavigatorController>().changeNavBarIndex(2);
-              },
-              child: const CircleAvatar(
-                radius: 30,
-                backgroundImage: AssetImage("assets/images/me.jpg"),
-              ),
-            ),
-          )
+              padding: const EdgeInsets.fromLTRB(0, 10, 10, 2),
+              child: DescribedFeatureOverlay(
+                featureId: 'profile_feature_id',
+                tapTarget: const CircleAvatar(
+                  radius: 30,
+                  backgroundImage: AssetImage("assets/images/me.jpg"),
+                ),
+                title: const Text('صفحه پروفایل'),
+                description: const Text(
+                    'با زدن بر روی عکس پروفایل خود میتوانید اطلاهات کاربری خود و اطلاعات مربوط به خرید های گذشته خود را ببینید'),
+                backgroundColor: Theme.of(context).primaryColor,
+                contentLocation: ContentLocation.below,
+                completeDuration: const Duration(milliseconds: 100),
+                onComplete: () async {
+                  return true;
+                },
+                overflowMode: OverflowMode.wrapBackground,
+                targetColor: Colors.orange.shade100,
+                textColor: Colors.white,
+                child: buildGestureDetector(),
+              )),
         ],
+      ),
+    );
+  }
+
+  GestureDetector buildGestureDetector() {
+    return GestureDetector(
+      onTap: () {
+        Get.find<NavigatorController>().changeNavBarIndex(2);
+      },
+      child: const CircleAvatar(
+        radius: 30,
+        backgroundImage: AssetImage("assets/images/me.jpg"),
       ),
     );
   }

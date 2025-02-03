@@ -133,7 +133,7 @@ class MainItem extends StatelessWidget {
                                     height: h / 5.5,
                                     decoration: BoxDecoration(
                                         color: unSelectedColor,
-                                        borderRadius: BorderRadius.circular(100),
+                                        borderRadius: BorderRadius.circular(30),
                                         boxShadow: const [
                                           BoxShadow(
                                               color: Color.fromARGB(
@@ -154,15 +154,26 @@ class MainItem extends StatelessWidget {
                                     delay: Duration(
                                         milliseconds:
                                             (index / 0.5 * 250).toInt()),
-                                    child: SizedBox(
+                                    child: Container(
                                       width: w / 2.5,
                                       height: h / 5,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          // Adding shadow to the image
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            blurRadius: 10,
+                                            offset: Offset(0, 4),
+                                          ),
+                                        ],
+                                      ),
                                       child: Hero(
                                         tag: _walletController
                                             .walletFood[index].id,
                                         child: Image.asset(
                                           _walletController.walletFood[index].img,
-                                          fit: BoxFit.cover,
+                                          fit: BoxFit.fitWidth,
                                         ),
                                       ),
                                     ),
@@ -186,15 +197,14 @@ class MainItem extends StatelessWidget {
                               ),
                               Positioned(
                                 left: 171,
-                                top: 68,
+                                top: 70,
                                 child: FadeInLeft(
                                   delay: Duration(
                                       milliseconds: (index / 0.5 * 400).toInt()),
                                   child: Text(
                                     _walletController.walletFood[index].subtitle,
                                     style: GoogleFonts.oxygen(
-                                        color: const Color.fromARGB(
-                                            255, 135, 134, 134),
+                                        color:  Colors.grey.shade700,
                                         fontWeight: FontWeight.w300,
                                         fontSize: 16),
                                   ),

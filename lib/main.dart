@@ -1,3 +1,4 @@
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return FeatureDiscovery(child:GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Food Mobile App UI Design',
       initialBinding: MyBindings(),
@@ -27,10 +28,21 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.orange.shade50,
           appBarTheme:AppBarTheme(backgroundColor: Colors.orange.shade50) ,
           switchTheme: SwitchThemeData(
-            thumbColor: MaterialStateProperty.all(Colors.orange),
-            trackColor: MaterialStateProperty.all(Colors.orange.shade100),
+            thumbColor: MaterialStateProperty.resolveWith<Color>((states) {
+              if (states.contains(MaterialState.selected)) {
+                return Colors.orange;
+              }
+              return Colors.grey;
+            }),
+            trackColor: MaterialStateProperty.resolveWith<Color>((states) {
+              if (states.contains(MaterialState.selected)) {
+                return Colors.orange.shade100;
+              }
+              return Colors.grey.shade300;
+            }),
           ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
+
+        elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orangeAccent,
               shape: RoundedRectangleBorder(
@@ -51,6 +63,6 @@ class MyApp extends StatelessWidget {
           )),
       textDirection: TextDirection.rtl,
       home: const SplashPage(),
-    );
+    ));
   }
 }

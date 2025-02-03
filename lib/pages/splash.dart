@@ -1,15 +1,41 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 //
 import '../pages/landscape_mode.dart';
 import '../controllers/splash_controller.dart';
 import '../utils/constanst.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback((Duration duration) {
+
+        FeatureDiscovery.discoverFeatures(
+          context,
+          const <String>{
+            // Feature ids for every feature that you want to showcase in order.
+            'profile_feature_id',
+            'add_item_feature_id',
+            'add_item_details_feature_id'
+          },
+        );
+
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

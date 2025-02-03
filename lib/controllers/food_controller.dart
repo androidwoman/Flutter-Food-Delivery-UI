@@ -6,7 +6,7 @@ class FoodController extends GetxController {
   List<List<FoodModel>> foods = [
     [FoodModel(
       id: "1",
-      img: "assets/images/1.png",
+      img: "assets/images/3.png",
       title: "سالاد یونانی",
       subtitle: "به همراه سس مخصوص",
       price: 32.00,
@@ -52,7 +52,7 @@ class FoodController extends GetxController {
     ),
     FoodModel(
       id: "5",
-      img: "assets/images/5.png",
+      img: "assets/images/4.png",
       title: "خورشت فسنجان",
       subtitle: "به همراه دوغ",
       price: 24.00,
@@ -63,7 +63,7 @@ class FoodController extends GetxController {
     ),
     FoodModel(
       id: "6",
-      img: "assets/images/6.png",
+      img: "assets/images/4.png",
       title: "پیتزا سبزیجات",
       subtitle: "به همراه سس",
       price: 32.00,

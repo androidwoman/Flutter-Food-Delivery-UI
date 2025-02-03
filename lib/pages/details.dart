@@ -1,8 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+
 //
 import '../controllers/switch_controller.dart';
 import '../controllers/wallet_controller.dart';
@@ -15,14 +17,38 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: const MyFAB(),
+        floatingActionButton: DescribedFeatureOverlay(
+          featureId: 'add_item_details_feature_id',
+          // Unique id that identifies this overlay.
+          tapTarget: const SizedBox(
+              height: 70,
+              width: 70,
+              child: Icon(
+                LineIcons.shoppingCart,
+                color: Colors.white,
+                size: 40,
+              )),
+          // The widget that will be displayed as the tap target.
+          title: const Text('افزودن غذا'),
+          description: const Text(
+              'با زدن این آیتم میتوانید غذای انتخابی را به لیست خرید خود اضافه کنید '),
+          backgroundColor: Theme.of(context).primaryColor,
+          contentLocation: ContentLocation.above,
+          overflowMode: OverflowMode.wrapBackground,
+          onComplete: () async {
+            return true;
+          },
+          targetColor: Colors.orange.shade100,
+          textColor: Colors.white,
+          child: const MyFAB(),
+        ),
         appBar: const MyAppBar(),
-        body: Directionality(
+        body: const Directionality(
           textDirection: TextDirection.rtl,
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Column(
-              children: const [
+              children: [
                 TopImage(),
                 HeaderWidget(),
                 MiddleDescription(),
@@ -50,15 +76,22 @@ class BottomPrice extends StatelessWidget {
         alignment: Alignment.bottomRight,
         child: Container(
           margin: const EdgeInsets.only(
-            top: 10,
+            top: 8,
           ),
           child: Row(
-            crossAxisAlignment:CrossAxisAlignment.start ,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Icon(
+                LineIcons.dollarSign,
+                color: Colors.grey.shade700,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
               Text(
                 "هزینه نهایی",
                 style: GoogleFonts.oxygen(
-                  color: Colors.grey,
+                  color: Colors.grey.shade700,
                   fontSize: 18,
                 ),
               ),
@@ -69,11 +102,9 @@ class BottomPrice extends StatelessWidget {
                 "${Get.find<FoodController>().foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].price.toStringAsFixed(2)} تومان ",
                 style: GoogleFonts.oxygen(
                     color: Colors.black,
-                    fontSize: 25,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold),
               ),
-
-
             ],
           ),
         ),
@@ -99,26 +130,27 @@ class DeliveryTime extends StatelessWidget {
         height: h / 22,
         child: Row(
           children: [
+            Icon(
+              LineIcons.clock,
+              color: Colors.grey.shade700,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
             Text(
               "زمان ارسال",
               style: GoogleFonts.oxygen(
-                color: Colors.grey,
+                color: Colors.grey.shade700,
                 fontSize: 18,
               ),
-            ),
-            const SizedBox(
-              width: 15,
-            ),
-            const Icon(
-              LineIcons.clock,
-              color: Colors.grey,
             ),
             const SizedBox(
               width: 5,
             ),
             Text(
               Get.find<FoodController>()
-                  .foods[_controller.currentCategoryIndex][_controller.currentFoodIndex]
+                  .foods[_controller.currentCategoryIndex]
+                      [_controller.currentFoodIndex]
                   .deliveryTime,
               style: GoogleFonts.oxygen(
                 color: Colors.black,
@@ -147,14 +179,15 @@ class MiddleDescription extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(top: 8),
         width: w,
-        height: h / 5,
+        height: h / 6,
         child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             child: Text(
               Get.find<FoodController>()
-                  .foods[_controller.currentCategoryIndex][_controller.currentFoodIndex]
+                  .foods[_controller.currentCategoryIndex]
+                      [_controller.currentFoodIndex]
                   .description,
-              style: const TextStyle(color: Colors.grey, fontSize: 18),
+              style: TextStyle(color: Colors.grey.shade700, fontSize: 18),
             )),
       ),
     );
@@ -175,16 +208,29 @@ class MyFAB extends StatelessWidget {
       height: 70,
       width: 70,
       child: FloatingActionButton(
-
         backgroundColor: Colors.black,
         onPressed: () {
           Get.find<WalletController>().add(
-            id: _foodController.foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].id,
-            img: _foodController.foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].img,
-            title: _foodController.foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].title,
-            subtitle:
-                _foodController.foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].subtitle,
-            price: _foodController.foods[_controller.currentCategoryIndex][_controller.currentFoodIndex].price,
+            id: _foodController
+                .foods[_controller.currentCategoryIndex]
+                    [_controller.currentFoodIndex]
+                .id,
+            img: _foodController
+                .foods[_controller.currentCategoryIndex]
+                    [_controller.currentFoodIndex]
+                .img,
+            title: _foodController
+                .foods[_controller.currentCategoryIndex]
+                    [_controller.currentFoodIndex]
+                .title,
+            subtitle: _foodController
+                .foods[_controller.currentCategoryIndex]
+                    [_controller.currentFoodIndex]
+                .subtitle,
+            price: _foodController
+                .foods[_controller.currentCategoryIndex]
+                    [_controller.currentFoodIndex]
+                .price,
           );
         },
         child: const Icon(
@@ -219,11 +265,13 @@ class HeaderWidget extends StatelessWidget {
               width: w / 1.6,
               child: Text(
                 Get.find<FoodController>()
-                    .foods[_controller.currentCategoryIndex][_controller.currentFoodIndex]
+                    .foods[_controller.currentCategoryIndex]
+                        [_controller.currentFoodIndex]
                     .title,
                 style: GoogleFonts.oxygen(
                   fontSize: Get.find<FoodController>()
-                              .foods[_controller.currentCategoryIndex][_controller.currentFoodIndex]
+                              .foods[_controller.currentCategoryIndex]
+                                  [_controller.currentFoodIndex]
                               .title
                               .length <=
                           13
@@ -234,7 +282,6 @@ class HeaderWidget extends StatelessWidget {
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -252,16 +299,29 @@ class TopImage extends StatelessWidget {
     var _controller = Get.find<SwitchController>();
     return Spin(
       delay: const Duration(milliseconds: 200),
-      child: SizedBox(
+      child: Container(
         width: w,
         height: h / 2.3,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            // Adding shadow to the image
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
         child: Hero(
             tag: Get.find<FoodController>()
-                .foods[_controller.currentCategoryIndex][_controller.currentFoodIndex]
+                .foods[_controller.currentCategoryIndex]
+                    [_controller.currentFoodIndex]
                 .id,
             child: Image.asset(
               Get.find<FoodController>()
-                  .foods[_controller.currentCategoryIndex][_controller.currentFoodIndex]
+                  .foods[_controller.currentCategoryIndex]
+                      [_controller.currentFoodIndex]
                   .img,
             )),
       ),
@@ -274,8 +334,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     Key? key,
   }) : super(key: key);
+
   @override
   Size get preferredSize => const Size.fromHeight(55);
+
   @override
   Widget build(BuildContext context) {
     return FadeInDown(
